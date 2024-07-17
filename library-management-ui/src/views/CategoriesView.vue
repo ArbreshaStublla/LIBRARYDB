@@ -64,7 +64,7 @@ export default {
   methods: {
     async fetchCategories() {
       try {
-        const response = await fetch('http://localhost:3000/categories');
+        const response = await fetch('http://192.168.44.239:3000/categories');
         this.categories = await response.json();
       } catch (error) {
         console.error('Error fetching categories:', error);
@@ -72,7 +72,7 @@ export default {
     },
     async addCategory() {
       try {
-        const response = await fetch('http://localhost:3000/categories', {
+        const response = await fetch('http://192.168.44.239:3000/categories', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -108,7 +108,7 @@ export default {
     },
     async updateCategory() {
       try {
-        const response = await fetch(`http://localhost:3000/categories/${this.editedCategory.category_id}`, {
+        const response = await fetch(`http://192.168.44.239:3000/categories/${this.editedCategory.category_id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
@@ -140,7 +140,7 @@ export default {
     },
     async deleteCategory(categoryId) {
       try {
-        const response = await fetch(`http://localhost:3000/categories/${categoryId}`, {
+        const response = await fetch(`http://192.168.44.239:3000/categories/${categoryId}`, {
           method: 'DELETE'
         });
         if (response.ok) {
