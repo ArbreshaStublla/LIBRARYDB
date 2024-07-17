@@ -1,44 +1,67 @@
 <template>
   <v-container>
-  <div class="categories-container">
-    <h2>Categories</h2>
-    
-    <!-- Form for adding or editing a category -->
-    <form v-if="!editingCategory" @submit.prevent="addCategory">
-      <h3>Add Category</h3>
-      <label for="name">Name:</label>
-      <input type="text" id="name" v-model="newCategory.name" required>
-      
-      <label for="description">Description:</label>
-      <textarea id="description" v-model="newCategory.description" required></textarea>
-      
-      <button type="submit">Add Category</button>
-    </form>
-    <form v-else @submit.prevent="updateCategory">
-      <h3>Edit Category</h3>
-      <label for="editName">Name:</label>
-      <input type="text" id="editName" v-model="editedCategory.name" required>
-      
-      <label for="editDescription">Description:</label>
-      <textarea id="editDescription" v-model="editedCategory.description" required></textarea>
-      
-      <button type="submit">Update Category</button>
-      <button type="button" @click="cancelEdit">Cancel</button>
-    </form>
+    <div class="categories-container">
+      <h2>Categories</h2>
 
-    <ul>
-      <li v-for="category in categories" :key="category.category_id" class="category-item">
-        <router-link :to="'/categories/' + category.category_id">
-          <h3>{{ category.name }}</h3>
-        </router-link>
-        <p>{{ category.description }}</p>
-        <p><strong>ID:</strong> {{ category.category_id }}</p> <!-- Displaying category_id -->
-        <button @click="editCategory(category)">Edit</button>
-        <button @click="deleteCategory(category.category_id)">Delete</button>
-      </li>
-    </ul>
-  </div>
-</v-container>
+      <!-- Button to open the modal for adding a category -->
+      <v-btn color="primary" @click="showAddCategoryModal = true">Add Category</v-btn>
+
+      <!-- Modal for adding a category -->
+      <v-dialog v-model="showAddCategoryModal" persistent max-width="600px">
+        <v-card>
+          <v-card-title>
+            <span class="headline">Add Category</span>
+          </v-card-title>
+          <v-card-text>
+            <v-form @submit.prevent="addCategory">
+              <v-text-field
+                label="Name"
+                v-model="newCategory.name"
+                required
+              ></v-text-field>
+              <v-textarea
+                label="Description"
+                v-model="newCategory.description"
+                required
+              ></v-textarea>
+              <v-btn color="primary" type="submit">Add Category</v-btn>
+            </v-form>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="red" @click="showAddCategoryModal = false">Cancel</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <!-- Form for editing a category -->
+      <form v-if="editingCategory" @submit.prevent="updateCategory">
+        <h3>Edit Category</h3>
+        <label for="editName">Name:</label>
+        <input type="text" id="editName" v-model="editedCategory.name" required>
+        <label for="editDescription">Description:</label>
+        <textarea id="editDescription" v-model="editedCategory.description" required></textarea>
+        <button type="submit">Update Category</button>
+        <button type="button" @click="cancelEdit">Cancel</button>
+      </form>
+
+      <ul>
+        <li v-for="category in categories" :key="category.category_id" class="category-item">
+          <router-link :to="'/categories/' + category.category_id">
+            <h3>{{ category.name }}</h3>
+          </router-link>
+          <p>{{ category.description }}</p>
+          <p><strong>ID:</strong> {{ category.category_id }}</p>
+          <button class="edit-button" @click="editCategory(category)">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button class="delete-button" @click="deleteCategory(category.category_id)">
+            <i class="fas fa-trash"></i>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </v-container>
 </template>
 
 <script>
@@ -55,7 +78,8 @@ export default {
         category_id: null,
         name: '',
         description: ''
-      }
+      },
+      showAddCategoryModal: false // Add this data property to control the modal
     };
   },
   created() {
@@ -92,6 +116,7 @@ export default {
           });
           this.newCategory.name = '';
           this.newCategory.description = '';
+          this.showAddCategoryModal = false; // Close the modal
           console.log('Category added successfully');
         } else {
           console.error('Failed to add category');
@@ -195,18 +220,31 @@ export default {
   margin-top: 10px;
   padding: 5px 10px;
   margin-right: 5px;
-  background-color: #007bff;
-  color: white;
   border: none;
   border-radius: 3px;
   cursor: pointer;
 }
 
-.category-item button:hover {
+.edit-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.delete-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+.edit-button:hover {
   background-color: #0056b3;
 }
 
-.category-item button:focus {
+.delete-button:hover {
+  background-color: #c82333;
+}
+
+.edit-button:focus,
+.delete-button:focus {
   outline: none;
 }
 

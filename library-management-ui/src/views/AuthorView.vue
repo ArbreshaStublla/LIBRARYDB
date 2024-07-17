@@ -5,6 +5,7 @@
 
       <!-- Button to trigger the modal -->
       <div class="buttonn-container">
+        <!-- Button to trigger the modal -->
         <button type="button" class="button-23" @click="showModal = true">
           Add Author
         </button>
@@ -26,7 +27,7 @@
             </div>
 
             <div class="form-actions">
-              <button type="submit" class="button-23 button-submit">Add Author</button>
+              <button type="submit" class="button-23">Add Author</button>
               <span class="button-spacing"></span>
               <button type="button" class="button-23 button-cancel" @click="closeModal">Cancel</button>
             </div>
@@ -47,7 +48,7 @@
                 <label for="edit-biography">Biography:</label>
                 <textarea id="edit-biography" v-model="author.biography" class="form-control" rows="4"></textarea>
               </div>
-              <button @click="saveAuthor(author)" class="button-23 button-submit">
+              <button @click="saveAuthor(author)" class="button-23">
                 <i class="fas fa-check"></i>
               </button>
               <span class="button-spacing"></span>
@@ -58,10 +59,10 @@
             <template v-else>
               <strong>{{ author.name }}</strong>
               <p class="author-biography">{{ author.biography }}</p>
-              <button @click="deleteAuthor(author.author_id)" class="button-234">
+              <button @click="deleteAuthor(author.author_id)" class="button-delete">
                 <i class="fas fa-trash"></i>
               </button>
-              <button @click="editAuthor(author)" class="button-234">
+              <button @click="editAuthor(author)" class="button-edit">
                 <i class="fas fa-edit"></i>
               </button>
             </template>
@@ -318,5 +319,47 @@ export default {
 .button-cancel {
   float: right;
 }
-</style>
+/* Hover styles for buttons */
+.button-delete {
+  background-color: transparent;
+  border: none;
+  margin-left: 720px;
+  color: red;
+  cursor: pointer;
+  transition: color 0.3s;
+}
 
+.button-delete:hover {
+  color: darkred;
+  border: none;
+}
+
+.button-edit {
+  background-color: transparent;
+  border: none;
+  color: blue;
+  margin-left: 720px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.button-edit:hover {
+  color: darkblue;
+  border: none;
+}
+
+.button-cancel {
+  background-color: #f8d7da;
+  border: none;
+  color: #721c24;
+}
+
+.button-cancel:hover {
+  background-color: #f5c6cb;
+}
+
+/* Remove default border on buttons */
+button {
+  border: none;
+}
+</style>
