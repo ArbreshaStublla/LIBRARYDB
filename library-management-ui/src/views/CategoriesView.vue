@@ -1,4 +1,5 @@
 <template>
+  <v-container>
   <div class="categories-container">
     <h2>Categories</h2>
     
@@ -37,6 +38,7 @@
       </li>
     </ul>
   </div>
+</v-container>
 </template>
 
 <script>
@@ -164,9 +166,11 @@ export default {
 
 <style>
 .categories-container {
+  height: 100vh;
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
+  border-radius: 5px;
 }
 
 .category-item {
