@@ -1,74 +1,75 @@
 <template>
   <v-container>
-  <div class="authors-container">
-    <h2>Authors</h2>
+    <div class="authors-container">
+      <h2>Authors</h2>
 
-    <!-- Button to trigger the modal -->
-    <div class="buttonn-container">
       <!-- Button to trigger the modal -->
-      <button type="button" class="button-23" @click="showModal = true">
-        Add Author
-      </button>
-    </div>
-
-    <!-- Modal for adding a new author -->
-    <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
-      <div class="modal-content">
-        <h3>Add New Author</h3>
-        <form @submit.prevent="addAuthor" class="author-form">
-          <div class="form-group">
-            <label for="name">Name:</label>
-            <input type="text" id="name" v-model="newAuthor.name" class="form-control" required>
-          </div>
-
-          <div class="form-group">
-            <label for="biography">Biography:</label>
-            <textarea id="biography" v-model="newAuthor.biography" class="form-control" rows="4" required></textarea>
-          </div>
-
-          <div class="form-actions">
-            <button type="submit" class="button-23">Add Author</button>
-            <button type="button" class="button-23" @click="closeModal">Cancel</button>
-          </div>
-        </form>
+      <div class="buttonn-container">
+        <button type="button" class="button-23" @click="showModal = true">
+          Add Author
+        </button>
       </div>
-    </div>
 
-    <!-- List of authors -->
-    <ul class="author-list">
-      <li v-for="author in authors" :key="author.author_id" class="author-item">
-        <div class="author-info">
-          <template v-if="author.editMode">
+      <!-- Modal for adding a new author -->
+      <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
+        <div class="modal-content">
+          <h3>Add New Author</h3>
+          <form @submit.prevent="addAuthor" class="author-form">
             <div class="form-group">
-              <label for="edit-name">Name:</label>
-              <input type="text" id="edit-name" v-model="author.name" class="form-control">
+              <label for="name">Name:</label>
+              <input type="text" id="name" v-model="newAuthor.name" class="form-control" required>
             </div>
+
             <div class="form-group">
-              <label for="edit-biography">Biography:</label>
-              <textarea id="edit-biography" v-model="author.biography" class="form-control" rows="4"></textarea>
+              <label for="biography">Biography:</label>
+              <textarea id="biography" v-model="newAuthor.biography" class="form-control" rows="4" required></textarea>
             </div>
-            <button @click="saveAuthor(author)" class="button-23">
-              <i class="fas fa-check"></i>
-            </button>
-            <button @click="cancelEdit(author)" class="button-23">
-              <i class="fas fa-times"></i>
-            </button>
-          </template>
-          <template v-else>
-            <strong>{{ author.name }}</strong>
-            <p class="author-biography">{{ author.biography }}</p>
-            <button @click="editAuthor(author)" class="button-23">
-              <i class="fas fa-edit"></i>
-            </button>
-            <button @click="deleteAuthor(author.author_id)" class="button-23">
-              <i class="fas fa-trash"></i>
-            </button>
-          </template>
+
+            <div class="form-actions">
+              <button type="submit" class="button-23 button-submit">Add Author</button>
+              <span class="button-spacing"></span>
+              <button type="button" class="button-23 button-cancel" @click="closeModal">Cancel</button>
+            </div>
+          </form>
         </div>
-      </li>
-    </ul>
-  </div>
-</v-container>
+      </div>
+
+      <!-- List of authors -->
+      <ul class="author-list">
+        <li v-for="author in authors" :key="author.author_id" class="author-item">
+          <div class="author-info">
+            <template v-if="author.editMode">
+              <div class="form-group">
+                <label for="edit-name">Name:</label>
+                <input type="text" id="edit-name" v-model="author.name" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="edit-biography">Biography:</label>
+                <textarea id="edit-biography" v-model="author.biography" class="form-control" rows="4"></textarea>
+              </div>
+              <button @click="saveAuthor(author)" class="button-23 button-submit">
+                <i class="fas fa-check"></i>
+              </button>
+              <span class="button-spacing"></span>
+              <button @click="cancelEdit(author)" class="button-23 button-cancel">
+                <i class="fas fa-times"></i>
+              </button>
+            </template>
+            <template v-else>
+              <strong>{{ author.name }}</strong>
+              <p class="author-biography">{{ author.biography }}</p>
+              <button @click="deleteAuthor(author.author_id)" class="button-234">
+                <i class="fas fa-trash"></i>
+              </button>
+              <button @click="editAuthor(author)" class="button-234">
+                <i class="fas fa-edit"></i>
+              </button>
+            </template>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </v-container>
 </template>
 
 <script>
@@ -164,16 +165,21 @@ export default {
 
 <style scoped>
 .authors-container {
-height: 100vh;
-max-width: 800px;
+  height: 100vh;
+  max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  border: 1px solid #dee2e6;
   border-radius: 5px;
 }
 
 .buttonn-container{
-  margin-left: 855px;
+  margin-left: 623px;
+  margin-bottom: 10px;
+}
+
+.button-234{
+  margin-left: 720px;
+  margin-top: -100px;
 }
 
 .author-form {
@@ -292,11 +298,25 @@ max-width: 800px;
   padding: 20px;
   border-radius: 4px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  width: 90%;
-  max-width: 500px;
+  max-width: 600px;
+  width: 100%;
 }
 
 .modal-content h3 {
   margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.modal-content form {
+  margin-top: 10px;
+}
+
+.button-spacing {
+  margin-left: 10px;
+}
+
+.button-cancel {
+  float: right;
 }
 </style>
+
