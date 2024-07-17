@@ -79,7 +79,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 * {
   font-family: 'cursive', cursive;
 }

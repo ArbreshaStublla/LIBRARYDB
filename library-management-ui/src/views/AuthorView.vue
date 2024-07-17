@@ -1,4 +1,5 @@
 <template>
+  <v-container>
   <div class="authors-container">
     <h2>Authors</h2>
 
@@ -67,6 +68,7 @@
       </li>
     </ul>
   </div>
+</v-container>
 </template>
 
 <script>
@@ -162,7 +164,8 @@ export default {
 
 <style scoped>
 .authors-container {
-  max-width: 1000px;
+height: 100vh;
+max-width: 800px;
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #dee2e6;
