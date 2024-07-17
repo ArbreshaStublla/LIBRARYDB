@@ -4,6 +4,7 @@ import CategoryView from '@/views/CategoriesView.vue';
 import BooksView from "@/views/BooksView.vue"
 import LoanView from "@/views/LoanView.vue"
 import PublishersView from '@/views/PublishersView.vue'
+import UsersView from "@/views/UsersView.vue"
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: '/publishers',
     name: 'publishers',
     component: PublishersView
+  },
+  {
+    path: '/users',
+    name: 'users',
+    component: UsersView
   }
 ];
 

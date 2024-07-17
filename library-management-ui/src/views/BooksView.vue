@@ -1,7 +1,7 @@
 <template>
     <div class="books-container">
       <h1>Books</h1>
-      <button @click="fetchBooks" class="btn btn-primary">Fetch Books</button>
+  
       <ul class="books-list" v-if="books.length > 0">
         <li v-for="book in books" :key="book.book_id">
           <h2>{{ book.title }}</h2>
@@ -21,10 +21,15 @@
         <h2>{{ editing ? 'Edit Book' : 'Add New Book' }}</h2>
         <label>Title</label>
         <input type="text" v-model="form.title" required>
+  
+        <!-- Author ID with Vuetify modal -->
         <label>Author ID</label>
-        <input type="text" v-model="form.author_id" required>
+        <v-text-field v-model="form.author_id" label="Author ID" @click="openAuthorsDialog" readonly required></v-text-field>
+  
+        <!-- Category ID with Vuetify modal -->
         <label>Category ID</label>
-        <input type="text" v-model="form.category_id" required>
+        <v-text-field v-model="form.category_id" label="Category ID" @click="openCategoriesDialog" readonly required></v-text-field>
+  
         <label>Published Date</label>
         <input type="date" v-model="form.published_date" required>
         <label>Description</label>
@@ -33,6 +38,23 @@
         <input type="checkbox" v-model="form.available">
         <button type="submit">{{ editing ? 'Update' : 'Add' }} Book</button>
       </form>
+  
+      <!-- Vuetify dialog for selecting categories -->
+      <v-dialog v-model="categoryDialog" max-width="600px">
+        <v-card>
+          <v-card-title>Select Category</v-card-title>
+          <v-card-text>
+            <v-list>
+              <v-list-item v-for="category in categories" :key="category.category_id" @click="selectCategory(category)">
+                <v-list-item-title>{{ category.name }}</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn color="primary" text @click="closeCategoriesDialog">Close</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </div>
   </template>
   
@@ -52,8 +74,16 @@
           available: false
         },
         editing: false,
-        editId: null
+        editId: null,
+        dialog: false, // Dialog state for author selection
+        authors: [], // Array to store authors fetched from API
+        categoryDialog: false, // Dialog state for category selection
+        categories: [] // Array to store categories fetched from API
       };
+    },
+    created() {
+      // Load books automatically when the component is created
+      this.fetchBooks();
     },
     methods: {
       async fetchBooks() {
@@ -115,12 +145,42 @@
           description: '',
           available: false
         };
+      },
+      async openAuthorsDialog() {
+        try {
+          const response = await axios.get('http://localhost:3000/authors');
+          this.authors = response.data;
+          this.dialog = true; // Open dialog after fetching authors
+        } catch (error) {
+          console.error('Error fetching authors:', error);
+        }
+      },
+      closeAuthorsDialog() {
+        this.dialog = false;
+      },
+      selectAuthor(author) {
+        this.form.author_id = author.author_id; // Set selected author ID to form
+        this.dialog = false; // Close the dialog after selection
+      },
+      async openCategoriesDialog() {
+        try {
+          const response = await axios.get('http://localhost:3000/categories');
+          this.categories = response.data;
+          this.categoryDialog = true; // Open dialog after fetching categories
+        } catch (error) {
+          console.error('Error fetching categories:', error);
+        }
+      },
+      closeCategoriesDialog() {
+        this.categoryDialog = false;
+      },
+      selectCategory(category) {
+        this.form.category_id = category.category_id; // Set selected category ID to form
+        this.categoryDialog = false; // Close the dialog after selection
       }
     }
   };
   </script>
-  
- 
   
   <style>
   .books-container {
@@ -238,3 +298,4 @@
     background-color: #218838;
   }
   </style>
+  

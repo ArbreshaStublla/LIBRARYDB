@@ -65,7 +65,8 @@ export default {
         { title: 'Categories', to: '/categories' },
         { title: 'Books', to: '/books' },
         { title: 'Loan', to: '/loans' },
-        { title: 'Publishers', to: '/publishers' }
+        { title: 'Publishers', to: '/publishers' },
+        { title: 'Users', to: '/users' }
       ],
       showLine: false // Add this line
     };
